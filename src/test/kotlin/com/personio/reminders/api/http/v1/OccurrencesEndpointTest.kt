@@ -48,7 +48,7 @@ class OccurrencesEndpointTest {
         val id1 = UUID.fromString("4e8549a3-6d92-4f89-8ccd-6a21ca63cb39")
         val id2 = UUID.fromString("a11fc72b-baee-4980-8c64-d1da015db59d")
         val employeeId = UUID.fromString("8989c9c5-fb2e-45ef-b92a-c279ddf20f25")
-        whenever(findUseCase.findAll(employeeId))
+        whenever(findUseCase.findAll(employeeId)) // maybe abstract all these creations or have some text fixtures?
             .thenReturn(
                 listOf(
                     MotherObject.occurrences().newFrom(

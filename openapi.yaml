@@ -59,6 +59,7 @@ paths:
           schema:
             type: string
             format: uuid
+      # No codes for the error responses?
       responses:
         204:
           description: Ok

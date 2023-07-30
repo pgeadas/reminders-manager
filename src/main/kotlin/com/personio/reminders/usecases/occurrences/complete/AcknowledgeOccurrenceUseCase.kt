@@ -22,7 +22,7 @@ class AcknowledgeOccurrenceUseCase(
      */
     fun acknowledge(id: UUID) {
         val occurrence = occurrencesRepository.findBy(id)
-            ?: throw OccurrenceNotFoundException()
+            ?: throw OccurrenceNotFoundException() // using exceptions for flow control
         occurrencesRepository.acknowledge(occurrence)
     }
 }

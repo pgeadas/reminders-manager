@@ -1,6 +1,5 @@
 package com.personio.reminders.usecases.reminders.create
 
-import com.personio.reminders.domain.reminders.Reminder
 import com.personio.reminders.helpers.MotherObject
 import java.time.Instant
 import java.util.UUID
@@ -23,7 +22,7 @@ internal class CreateReminderCommandTest {
             recurringFrequency = null
         )
 
-        val reminder = Reminder.fromCommand(command)
+        val reminder = ReminderMapper.fromCommand(command)
 
         assertEquals(command.employeeId, reminder.employeeId)
         assertEquals(command.text, reminder.text)

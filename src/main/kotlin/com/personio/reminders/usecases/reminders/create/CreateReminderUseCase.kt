@@ -24,7 +24,7 @@ class CreateReminderUseCase(
      */
     @Transactional
     fun create(command: CreateReminderCommand): UUID {
-        val reminder = Reminder.fromCommand(command)
+        val reminder = ReminderMapper.fromCommand(command)
 
         remindersRepository.create(reminder)
         createReminderFirstOccurrence(reminder)
