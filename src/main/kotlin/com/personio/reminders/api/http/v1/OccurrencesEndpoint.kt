@@ -1,18 +1,17 @@
 package com.personio.reminders.api.http.v1
 
 import com.personio.reminders.api.http.v1.mappers.OccurrencesResponseMapper
+import com.personio.reminders.api.http.v1.responses.shared.ApiErrors
 import com.personio.reminders.api.http.v1.responses.shared.Response
+import com.personio.reminders.api.http.v1.responses.shared.UseCaseResultToResponseMapper
 import com.personio.reminders.usecases.occurrences.complete.AcknowledgeOccurrenceUseCase
 import com.personio.reminders.usecases.occurrences.find.FindOccurrencesUseCase
-import java.util.UUID
-import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
+import jakarta.servlet.http.HttpServletRequest
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.MessageSource
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
+import java.util.*
 
 /**
  * This is a controller (interface adapter) used by the web interface.
@@ -29,7 +28,8 @@ class OccurrencesEndpoint(
      * during the instantiation of this controller
      */
     private val findUseCase: FindOccurrencesUseCase,
-    private val acknowledgeUseCase: AcknowledgeOccurrenceUseCase
+    private val acknowledgeUseCase: AcknowledgeOccurrenceUseCase,
+    @Autowired private val messageSource: MessageSource
 ) {
     /**
      * This method is executed when the employees perform a `GET` request to the `/occurrences?employeeId={employeeId}` endpoint.
@@ -47,8 +47,11 @@ class OccurrencesEndpoint(
      * This endpoint returns a `204 NO CONTENT` status code to the client.
      */
     @PutMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun acknowledge(@PathVariable id: UUID) {
-        acknowledgeUseCase.acknowledge(id)
+    fun acknowledge(@PathVariable id: UUID, request: HttpServletRequest): ResponseEntity<ApiErrors> {
+        val result = acknowledgeUseCase.acknowledge(id)
+        val messageRetriever: (String) -> String = { message ->
+            messageSource.getMessage(message, null, request.locale)
+        }
+        return UseCaseResultToResponseMapper.createResponseEntityFromResult(result, messageRetriever)
     }
 }

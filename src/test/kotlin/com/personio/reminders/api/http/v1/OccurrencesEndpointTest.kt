@@ -1,15 +1,13 @@
 package com.personio.reminders.api.http.v1
 
-import com.personio.reminders.domain.occurrences.exceptions.OccurrenceNotFoundException
 import com.personio.reminders.helpers.MotherObject
 import com.personio.reminders.infra.configuration.DefaultTestConfiguration
 import com.personio.reminders.usecases.occurrences.complete.AcknowledgeOccurrenceUseCase
 import com.personio.reminders.usecases.occurrences.find.FindOccurrencesUseCase
-import java.time.Instant
-import java.util.UUID
+import com.personio.reminders.usecases.UseCaseResult
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.doNothing
+import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.whenever
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureWebClient
@@ -23,6 +21,8 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.util.ResourceUtils
+import java.time.Instant
+import java.util.*
 
 /**
  * Integration tests focused on the HTTP endpoints for reminder's occurrences.
@@ -107,7 +107,7 @@ class OccurrencesEndpointTest {
 
     @Test
     fun `acknowledge should return 204 status when an existing reminder is deleted`() {
-        doNothing().whenever(acknowledgeUseCase)
+        doReturn(UseCaseResult.Success).whenever(acknowledgeUseCase)
             .acknowledge(id = UUID.fromString("a2999215-db7d-49e9-91eb-15038e50182c"))
         mockMvc
             .perform(
@@ -122,7 +122,7 @@ class OccurrencesEndpointTest {
     @Test
     fun `acknowledge should return 404 status when trying to acknowledge a non-existing occurrence`() {
         whenever(acknowledgeUseCase.acknowledge(id = UUID.fromString("a2999215-db7d-49e9-91eb-15038e50182c")))
-            .thenThrow(OccurrenceNotFoundException())
+            .thenReturn(UseCaseResult.NotFound())
         mockMvc
             .perform(
                 MockMvcRequestBuilders.put("/occurrences/a2999215-db7d-49e9-91eb-15038e50182c")

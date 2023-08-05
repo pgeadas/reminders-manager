@@ -1,12 +1,12 @@
 package com.personio.reminders.usecases.occurrences.complete
 
-import com.personio.reminders.domain.occurrences.exceptions.OccurrenceNotFoundException
 import com.personio.reminders.helpers.MotherObject
 import com.personio.reminders.infra.postgres.occurrences.InMemoryOccurrencesRepository
-import java.util.UUID
+import com.personio.reminders.usecases.UseCaseResult
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+import java.util.*
 
 /**
  * Unit tests for the AcknowledgeOccurrenceUseCase class.
@@ -37,9 +37,8 @@ internal class AcknowledgeOccurrenceUseCaseTest {
             MotherObject.clock
         )
         val useCase = AcknowledgeOccurrenceUseCase(repo)
+        val result = useCase.acknowledge(UUID.randomUUID())
 
-        assertThrows<OccurrenceNotFoundException> {
-            useCase.acknowledge(UUID.randomUUID())
-        }
+        assertEquals(UseCaseResult.NotFound(), result)
     }
 }

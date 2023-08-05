@@ -2,7 +2,6 @@ package com.personio.reminders.api.http.v1
 
 import com.personio.reminders.api.http.v1.responses.shared.ApiError
 import com.personio.reminders.api.http.v1.responses.shared.ApiErrors
-import com.personio.reminders.domain.occurrences.exceptions.OccurrenceNotFoundException
 import com.personio.reminders.domain.reminders.exceptions.ReminderNotFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -46,7 +45,7 @@ class ExceptionsHandler(@Autowired private val messageSource: MessageSource) {
             HttpStatus.BAD_REQUEST, messageSource.getMessage("invalid-input", null, locale), ex.message, ex
         )
 
-    @ExceptionHandler(value = [ReminderNotFoundException::class, OccurrenceNotFoundException::class])
+    @ExceptionHandler(value = [ReminderNotFoundException::class])
     fun handleNotFoundException(ex: Exception, request: WebRequest, locale: Locale) =
         responseWithApiError(HttpStatus.NOT_FOUND, ex, locale)
 

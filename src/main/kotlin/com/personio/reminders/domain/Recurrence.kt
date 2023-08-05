@@ -8,6 +8,7 @@ sealed class Recurrence {
         data object WEEKLY : Frequency(2)
         data object MONTHLY : Frequency(3)
         data object YEARLY : Frequency(4)
+        data object MINUTE : Frequency(5) // email should only be sent once regardless
 
         companion object {
             fun of(value: Int?): Frequency? {
@@ -16,6 +17,7 @@ sealed class Recurrence {
                     2 -> WEEKLY
                     3 -> MONTHLY
                     4 -> YEARLY
+                    5 -> MINUTE
                     else -> null
                 }
             }

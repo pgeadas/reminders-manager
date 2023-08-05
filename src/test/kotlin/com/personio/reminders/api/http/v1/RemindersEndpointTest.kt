@@ -1,16 +1,12 @@
 package com.personio.reminders.api.http.v1
 
-import com.personio.reminders.domain.reminders.exceptions.ReminderNotFoundException
 import com.personio.reminders.helpers.MotherObject
 import com.personio.reminders.infra.configuration.DefaultTestConfiguration
 import com.personio.reminders.usecases.reminders.create.CreateReminderUseCase
 import com.personio.reminders.usecases.reminders.find.FindRemindersUseCase
-import java.time.Instant
-import java.util.UUID
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.any
-import org.mockito.kotlin.doNothing
 import org.mockito.kotlin.whenever
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureWebClient
@@ -24,6 +20,8 @@ import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.util.ResourceUtils
+import java.time.Instant
+import java.util.*
 
 /**
  * Integration tests focused on the HTTP endpoints for reminders.
