@@ -1,5 +1,6 @@
 package com.personio.reminders.domain.reminders
 
+import com.personio.reminders.domain.Recurrence
 import java.time.Instant
 import java.util.*
 
@@ -13,6 +14,6 @@ data class Reminder(
     val text: String,
     val date: Instant,
     val isRecurring: Boolean,
-    val recurringInterval: Int?,
-    val recurringFrequency: Int?
+    val recurringInterval: Recurrence.Interval?,
+    val recurringFrequency: Recurrence.Frequency?
 )

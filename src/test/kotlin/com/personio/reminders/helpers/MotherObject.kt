@@ -1,5 +1,6 @@
 package com.personio.reminders.helpers
 
+import com.personio.reminders.domain.Recurrence
 import com.personio.reminders.domain.occurrences.Occurrence
 import com.personio.reminders.domain.reminders.Reminder
 import java.time.Clock
@@ -35,8 +36,8 @@ object ReminderMotherObject {
         text = text,
         date = date,
         isRecurring = isRecurring,
-        recurringInterval = recurringInterval,
-        recurringFrequency = recurringFrequency
+        recurringInterval = Recurrence.Interval.of(recurringInterval),
+        recurringFrequency = Recurrence.Frequency.of(recurringFrequency)
     )
 }
 

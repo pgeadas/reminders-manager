@@ -68,9 +68,9 @@ class InMemoryOccurrencesRepository(
             val nextOccurrenceInstant = if (lastOccurrence == null) {
                 reminder.date
             } else {
-                val unit = convertFrequencyToChronoUnit(reminder.recurringFrequency!!)
+                val unit = convertFrequencyToChronoUnit(reminder.recurringFrequency?.value!!)
                 val lastOccurrenceTimestamp = lastOccurrence.date
-                unit.addToInstant(lastOccurrenceTimestamp, reminder.recurringInterval!!.toLong(), clock)
+                unit.addToInstant(lastOccurrenceTimestamp, reminder.recurringInterval?.value!!.toLong(), clock)
             }
 
             reminder.id to nextOccurrenceInstant

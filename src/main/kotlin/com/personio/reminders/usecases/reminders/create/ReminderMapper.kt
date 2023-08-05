@@ -1,5 +1,6 @@
 package com.personio.reminders.usecases.reminders.create
 
+import com.personio.reminders.domain.Recurrence
 import com.personio.reminders.domain.reminders.Reminder
 import java.time.Instant
 import java.time.LocalDate
@@ -17,8 +18,8 @@ class ReminderMapper {
                 text = command.text,
                 date = toInstant(command.date),
                 isRecurring = command.isRecurring,
-                recurringInterval = command.recurringInterval,
-                recurringFrequency = command.recurringFrequency
+                recurringInterval = Recurrence.Interval.of(command.recurringInterval),
+                recurringFrequency = Recurrence.Frequency.of(command.recurringFrequency)
             )
         }
 

@@ -11,8 +11,8 @@ class RemindersResponseMapper {
                 reminder.text,
                 reminder.date.toString(),
                 reminder.isRecurring,
-                reminder.recurringInterval,
-                reminder.recurringFrequency
+                reminder.recurringInterval?.value,
+                reminder.recurringFrequency?.value
             )
     }
 }

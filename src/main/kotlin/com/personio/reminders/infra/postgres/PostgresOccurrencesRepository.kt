@@ -1,5 +1,6 @@
 package com.personio.reminders.infra.postgres
 
+import com.personio.reminders.domain.Recurrence
 import com.personio.reminders.domain.occurrences.Occurrence
 import com.personio.reminders.domain.occurrences.OccurrencesRepository
 import com.personio.reminders.domain.reminders.Reminder
@@ -185,8 +186,8 @@ class PostgresOccurrencesRepository(
             text = this.text,
             date = this.timestamp,
             isRecurring = this.isRecurring,
-            recurringInterval = this.recurrenceInterval,
-            recurringFrequency = this.recurrenceFrequency
+            recurringInterval = Recurrence.Interval.of(this.recurrenceInterval),
+            recurringFrequency = Recurrence.Frequency.of(this.recurrenceFrequency)
         )
     }
 

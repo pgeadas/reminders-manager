@@ -1,14 +1,13 @@
 package com.personio.reminders.infra.postgres
 
+import com.personio.reminders.domain.Recurrence
 import com.personio.reminders.domain.reminders.Reminder
 import com.personio.reminders.domain.reminders.RemindersRepository
-import java.time.Instant
-import java.util.UUID
 import org.jooq.DSLContext
-import org.jooq.generated.tables.Occurrences.OCCURRENCES
 import org.jooq.generated.tables.Reminders.REMINDERS
 import org.jooq.generated.tables.records.RemindersRecord
 import org.springframework.stereotype.Repository
+import java.util.*
 
 /**
  * This is the default implementation of the reminder's occurrences repository.
@@ -53,8 +52,8 @@ class PostgresRemindersRepository(
             reminder.text,
             reminder.date,
             reminder.isRecurring,
-            reminder.recurringInterval,
-            reminder.recurringFrequency
+            reminder.recurringInterval?.value,
+            reminder.recurringFrequency?.value
         ).execute()
     }
 
@@ -81,8 +80,8 @@ class PostgresRemindersRepository(
             text = this.text,
             date = this.timestamp,
             isRecurring = this.isRecurring,
-            recurringInterval = this.recurrenceInterval,
-            recurringFrequency = this.recurrenceFrequency
+            recurringInterval = Recurrence.Interval.of(this.recurrenceInterval),
+            recurringFrequency = Recurrence.Frequency.of(this.recurrenceFrequency)
         )
     }
 }

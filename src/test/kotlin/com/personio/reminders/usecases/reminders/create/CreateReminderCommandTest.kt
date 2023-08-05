@@ -28,7 +28,7 @@ internal class CreateReminderCommandTest {
         assertEquals(command.text, reminder.text)
         assertEquals(command.date, reminder.date.toString())
         assertEquals(command.isRecurring, reminder.isRecurring)
-        assertEquals(command.recurringInterval, reminder.recurringInterval)
+        assertEquals(command.recurringInterval, reminder.recurringInterval?.value)
         assertEquals(command.recurringFrequency, reminder.recurringFrequency)
     }
 }

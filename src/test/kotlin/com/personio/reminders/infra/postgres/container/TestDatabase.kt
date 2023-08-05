@@ -1,5 +1,6 @@
 package com.personio.reminders.infra.postgres.container
 
+import com.personio.reminders.domain.Recurrence
 import java.sql.*
 import java.sql.Date
 import java.time.Instant
@@ -118,6 +119,8 @@ class TestDatabase(private val dataSource: DataSource) {
                         statement.setTimestamp(index + 1, Timestamp.from(columnValue), utcCalendar)
 
                     is List<*> -> statement.setStringArray(index + 1, columnValue)
+                    is Recurrence.Interval -> statement.setInt(index + 1, columnValue.value)
+                    is Recurrence.Frequency -> statement.setInt(index + 1, columnValue.value)
                     else -> statement.setObject(index + 1, columnValue)
                 }
             } else {
