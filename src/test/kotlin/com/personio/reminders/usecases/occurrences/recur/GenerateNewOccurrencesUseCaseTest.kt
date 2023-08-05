@@ -42,7 +42,7 @@ internal class GenerateNewOccurrencesUseCaseTest {
         useCase.generateNewOccurrences()
 
         assertEquals(1, occurrencesRepository.occurrences.size)
-        assertEquals(reminderDate.toString(), occurrencesRepository.occurrences.single().date)
+        assertEquals(reminderDate, occurrencesRepository.occurrences.single().date)
     }
 
     @Test
@@ -143,7 +143,7 @@ internal class GenerateNewOccurrencesUseCaseTest {
             MotherObject.clock
         ).toString()
         val generatedOccurrence = occurrencesRepository.occurrences.single { it.id != firstOccurrence.id }
-        assertEquals(expectedRecurrenceDate, generatedOccurrence.date)
+        assertEquals(expectedRecurrenceDate, generatedOccurrence.date.toString())
     }
 
     private fun supportedRecurringFrequencies() = listOf(

@@ -5,7 +5,7 @@ import com.personio.reminders.domain.reminders.Reminder
 import java.time.Clock
 import java.time.Instant
 import java.time.ZoneOffset
-import java.util.UUID
+import java.util.*
 
 /**
  * An object mother is a kind of class used in testing to help create example
@@ -14,7 +14,7 @@ import java.util.UUID
  * https://martinfowler.com/bliki/ObjectMother.html
  */
 object MotherObject {
-    val clock: Clock = Clock.fixed(Instant.parse("2023-01-01T00:00:00Z"), ZoneOffset.UTC)
+    val clock: Clock = Clock.fixed(Instant.parse("2050-01-01T00:00:00Z"), ZoneOffset.UTC)
     fun reminders() = ReminderMotherObject
     fun occurrences() = OccurrenceMotherObject
 }
@@ -33,7 +33,7 @@ object ReminderMotherObject {
         id = id,
         employeeId = employeeId,
         text = text,
-        date = date.toString(),
+        date = date,
         isRecurring = isRecurring,
         recurringInterval = recurringInterval,
         recurringFrequency = recurringFrequency
@@ -51,7 +51,7 @@ object OccurrenceMotherObject {
     ) = Occurrence(
         id = id,
         reminder = reminder,
-        date = date?.toString() ?: reminder.date,
+        date = date ?: reminder.date,
         isAcknowledged = isAcknowledged,
         isNotificationSent = isNotificationSent
     )

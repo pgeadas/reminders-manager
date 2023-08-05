@@ -64,7 +64,7 @@ internal class PostgresOccurrencesRepositoryTest : OccurrencesRepositoryContract
         REMINDERS.ID.name to this.id,
         REMINDERS.EMPLOYEE_ID.name to this.employeeId,
         REMINDERS.TEXT.name to this.text,
-        REMINDERS.TIMESTAMP.name to Instant.parse(this.date),
+        REMINDERS.TIMESTAMP.name to this.date,
         REMINDERS.IS_RECURRING.name to this.isRecurring,
         REMINDERS.RECURRENCE_INTERVAL.name to this.recurringInterval,
         REMINDERS.RECURRENCE_FREQUENCY.name to this.recurringFrequency
@@ -73,7 +73,7 @@ internal class PostgresOccurrencesRepositoryTest : OccurrencesRepositoryContract
     private fun Occurrence.toDatabaseRow() = mapOf<String, Any?>(
         OCCURRENCES.ID.name to this.id,
         OCCURRENCES.REMINDER_ID.name to this.reminder.id,
-        OCCURRENCES.TIMESTAMP.name to Instant.parse(this.date),
+        OCCURRENCES.TIMESTAMP.name to this.date,
         OCCURRENCES.IS_ACKNOWLEDGED.name to this.isAcknowledged
     )
 }

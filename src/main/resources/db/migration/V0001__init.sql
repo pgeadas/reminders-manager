@@ -18,6 +18,5 @@ create table occurrences
     notification_sent bool default false
 );
 
--- Maybe it would be a good idea to enforce the relationship between records of different tables by using foreign keys
 
 

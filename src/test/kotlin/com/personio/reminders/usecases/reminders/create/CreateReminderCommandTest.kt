@@ -1,10 +1,10 @@
 package com.personio.reminders.usecases.reminders.create
 
 import com.personio.reminders.helpers.MotherObject
-import java.time.Instant
-import java.util.UUID
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import java.time.Instant
+import java.util.*
 
 /**
  * Unit tests for the CreateReminderCommand class.
@@ -26,7 +26,7 @@ internal class CreateReminderCommandTest {
 
         assertEquals(command.employeeId, reminder.employeeId)
         assertEquals(command.text, reminder.text)
-        assertEquals(command.date, reminder.date)
+        assertEquals(command.date, reminder.date.toString())
         assertEquals(command.isRecurring, reminder.isRecurring)
         assertEquals(command.recurringInterval, reminder.recurringInterval)
         assertEquals(command.recurringFrequency, reminder.recurringFrequency)

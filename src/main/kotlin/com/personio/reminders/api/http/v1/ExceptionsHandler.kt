@@ -4,8 +4,6 @@ import com.personio.reminders.api.http.v1.responses.shared.ApiError
 import com.personio.reminders.api.http.v1.responses.shared.ApiErrors
 import com.personio.reminders.domain.occurrences.exceptions.OccurrenceNotFoundException
 import com.personio.reminders.domain.reminders.exceptions.ReminderNotFoundException
-import java.util.Locale
-import java.util.UUID
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.MessageSource
@@ -16,12 +14,13 @@ import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.context.request.WebRequest
+import java.util.*
 
 /**
-* This class contains all exception handling logic for the API.
-* It is responsible to translate thrown exceptions to well-structured API responses.
-* Each method annotated with `@ExceptionHandler` is responsible for handling related exceptions.
-**/
+ * This class contains all exception handling logic for the API.
+ * It is responsible to translate thrown exceptions to well-structured API responses.
+ * Each method annotated with `@ExceptionHandler` is responsible for handling related exceptions.
+ **/
 @RestControllerAdvice
 class ExceptionsHandler(@Autowired private val messageSource: MessageSource) {
 
@@ -40,11 +39,11 @@ class ExceptionsHandler(@Autowired private val messageSource: MessageSource) {
     }
 
     @ExceptionHandler(
-        value = [HttpMessageNotReadableException::class, MissingServletRequestParameterException::class]
+        value = [HttpMessageNotReadableException::class, MissingServletRequestParameterException::class, IllegalArgumentException::class]
     )
     fun handleInvalidInputException(ex: Exception, request: WebRequest, locale: Locale) =
         responseWithApiError(
-            HttpStatus.BAD_REQUEST, messageSource.getMessage("invalid-input", null, locale), null, ex
+            HttpStatus.BAD_REQUEST, messageSource.getMessage("invalid-input", null, locale), ex.message, ex
         )
 
     @ExceptionHandler(value = [ReminderNotFoundException::class, OccurrenceNotFoundException::class])
@@ -58,9 +57,9 @@ class ExceptionsHandler(@Autowired private val messageSource: MessageSource) {
         status: HttpStatus,
         message: String,
         detail: String?,
-        exception: Throwable
+        exception: Throwable?
     ): ResponseEntity<ApiErrors> {
-        logger.error(message, exception)
+        logger.info("$message ${exception?.message}")
         return ResponseEntity(
             ApiErrors(
                 listOf(ApiError(UUID.randomUUID().toString(), status.toString(), message, detail))
@@ -76,6 +75,6 @@ class ExceptionsHandler(@Autowired private val messageSource: MessageSource) {
     ): ResponseEntity<ApiErrors> {
         val message =
             messageSource.getMessage(exception.message ?: "", exception.stackTrace, locale)
-        return responseWithApiError(status, message, null, exception)
+        return responseWithApiError(status, message, exception.message, exception)
     }
 }

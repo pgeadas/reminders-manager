@@ -4,10 +4,6 @@ import com.personio.reminders.domain.occurrences.Occurrence
 import com.personio.reminders.domain.occurrences.OccurrencesRepository
 import com.personio.reminders.domain.reminders.Reminder
 import com.personio.reminders.util.addToInstant
-import java.time.Clock
-import java.time.Instant
-import java.time.temporal.ChronoUnit
-import java.util.UUID
 import org.jooq.DSLContext
 import org.jooq.generated.tables.Occurrences.OCCURRENCES
 import org.jooq.generated.tables.Reminders.REMINDERS
@@ -15,6 +11,10 @@ import org.jooq.generated.tables.records.OccurrencesRecord
 import org.jooq.generated.tables.records.RemindersRecord
 import org.jooq.impl.DSL
 import org.springframework.stereotype.Repository
+import java.time.Clock
+import java.time.Instant
+import java.time.temporal.ChronoUnit
+import java.util.*
 
 private const val NOT_ACKNOWLEDGED = false
 private const val LAST_OCCURRENCE_TIMESTAMP = "LAST_OCCURRENCE_TIMESTAMP"
@@ -35,7 +35,7 @@ class PostgresOccurrencesRepository(
     private val clock: Clock
 ) : OccurrencesRepository {
 
-    override fun create(reminderId: UUID, date: String): UUID {
+    override fun create(reminderId: UUID, instant: Instant): UUID {
         val id = UUID.randomUUID()
 
         /*
@@ -59,7 +59,7 @@ class PostgresOccurrencesRepository(
         ).values(
             id,
             reminderId,
-            Instant.parse(date),
+            instant,
             NOT_ACKNOWLEDGED
         ).execute()
 
@@ -173,7 +173,7 @@ class PostgresOccurrencesRepository(
             id = this.id,
             reminder = reminder,
             isNotificationSent = this.notificationSent,
-            date = this.timestamp.toString(),
+            date = this.timestamp,
             isAcknowledged = this.isAcknowledged
         )
     }
@@ -183,7 +183,7 @@ class PostgresOccurrencesRepository(
             id = this.id,
             employeeId = this.employeeId,
             text = this.text,
-            date = this.timestamp.toString(),
+            date = this.timestamp,
             isRecurring = this.isRecurring,
             recurringInterval = this.recurrenceInterval,
             recurringFrequency = this.recurrenceFrequency

@@ -7,7 +7,7 @@ import com.personio.reminders.util.addToInstant
 import java.time.Clock
 import java.time.Instant
 import java.time.temporal.ChronoUnit
-import java.util.UUID
+import java.util.*
 
 /**
  * In-memory repository implementation used in the unit tests.
@@ -17,12 +17,12 @@ class InMemoryOccurrencesRepository(
     val occurrences: MutableCollection<Occurrence>,
     val clock: Clock
 ) : OccurrencesRepository {
-    override fun create(reminderId: UUID, date: String): UUID {
+    override fun create(reminderId: UUID, instant: Instant): UUID {
         val reminder = reminders.single { it.id == reminderId }
         val occurrence = Occurrence(
             id = UUID.randomUUID(),
             reminder = reminder,
-            date = date,
+            date = instant,
             isNotificationSent = false,
             isAcknowledged = false
         )
@@ -33,7 +33,7 @@ class InMemoryOccurrencesRepository(
     override fun findAt(instant: Instant): Collection<Occurrence> {
         return occurrences.filter {
             !it.isAcknowledged &&
-                Instant.parse(it.date).isBefore(instant)
+                it.date.isBefore(instant)
         }
     }
 
@@ -46,7 +46,7 @@ class InMemoryOccurrencesRepository(
 
         return occurrences.filter {
             !it.isAcknowledged &&
-                Instant.parse(it.date).isBefore(instant) &&
+                it.date.isBefore(instant) &&
                 reminderIds.contains(it.reminder.id)
         }
     }
@@ -58,22 +58,23 @@ class InMemoryOccurrencesRepository(
     override fun getInstantForNextReminderOccurrences(): Map<UUID, Instant> {
         val recurringReminders = reminders.filter {
             it.isRecurring &&
-                it.recurringFrequency != null &&
-                it.recurringInterval != null
+            it.recurringFrequency != null &&
+            it.recurringInterval != null
         }
 
-        return recurringReminders.map {
-            val lastOccurrence = occurrences.sortedBy { it.date }.lastOrNull()
+        // fixed shadowing
+        return recurringReminders.associate { reminder ->
+            val lastOccurrence = occurrences.maxByOrNull { it.date }
             val nextOccurrenceInstant = if (lastOccurrence == null) {
-                Instant.parse(it.date)
+                reminder.date
             } else {
-                val unit = convertFrequencyToChronoUnit(it.recurringFrequency!!)
-                val lastOccurrenceTimestamp = Instant.parse(lastOccurrence.date)
-                unit.addToInstant(lastOccurrenceTimestamp, it.recurringInterval!!.toLong(), clock)
+                val unit = convertFrequencyToChronoUnit(reminder.recurringFrequency!!)
+                val lastOccurrenceTimestamp = lastOccurrence.date
+                unit.addToInstant(lastOccurrenceTimestamp, reminder.recurringInterval!!.toLong(), clock)
             }
 
-            it.id to nextOccurrenceInstant
-        }.toMap()
+            reminder.id to nextOccurrenceInstant
+        }
     }
 
     override fun markAsNotified(occurrence: Occurrence) {

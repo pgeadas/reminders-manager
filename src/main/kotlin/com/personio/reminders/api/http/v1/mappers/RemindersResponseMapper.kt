@@ -9,7 +9,7 @@ class RemindersResponseMapper {
             RemindersResponse(
                 reminder.id.toString(),
                 reminder.text,
-                reminder.date,
+                reminder.date.toString(),
                 reminder.isRecurring,
                 reminder.recurringInterval,
                 reminder.recurringFrequency

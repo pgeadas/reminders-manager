@@ -23,7 +23,7 @@ class GenerateNewOccurrencesUseCase(
             .getInstantForNextReminderOccurrences()
         instantsForNextReminderOccurrences.forEach {
             val reminderId = it.key
-            val occurrenceInstant = it.value.toString()
+            val occurrenceInstant = it.value
 
             val occurrenceId = occurrencesRepository.create(reminderId, occurrenceInstant)
             logger.info("Scheduled occurrence $occurrenceId @ $occurrenceInstant for reminder $reminderId}")

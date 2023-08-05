@@ -49,7 +49,7 @@ class PersonioPostgresContainer(imageName: String) :
     }
 
     private fun runMigrations() {
-        Flyway.configure().dataSource(dataSource).mixed(true).load().migrate()
+       Flyway.configure().dataSource(dataSource).mixed(true).load().migrate()
     }
 
     override fun stop() {

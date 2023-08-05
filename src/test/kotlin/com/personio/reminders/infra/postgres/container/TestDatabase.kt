@@ -116,6 +116,7 @@ class TestDatabase(private val dataSource: DataSource) {
                     is LocalDate -> statement.setDate(index + 1, Date.valueOf(columnValue))
                     is Instant ->
                         statement.setTimestamp(index + 1, Timestamp.from(columnValue), utcCalendar)
+
                     is List<*> -> statement.setStringArray(index + 1, columnValue)
                     else -> statement.setObject(index + 1, columnValue)
                 }
@@ -141,9 +142,8 @@ class TestDatabase(private val dataSource: DataSource) {
         dataSource.connection
             .use { connection ->
                 connection.createStatement()
-                    .use { statement -> statement.execute("set time zone '${timeZone.id}'") }
-                connection.createStatement()
                     .use { statement ->
+                        statement.execute("set time zone '${timeZone.id}'")
                         statement.execute("select * from $tableName")
                         statement.resultSet
                             .use { resultSet ->

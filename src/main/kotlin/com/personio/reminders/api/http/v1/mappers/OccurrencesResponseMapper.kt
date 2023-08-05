@@ -10,7 +10,7 @@ class OccurrencesResponseMapper {
                 occurrence.id.toString(),
                 occurrence.reminder.id.toString(),
                 occurrence.reminder.text,
-                occurrence.date
+                occurrence.date.toString()
             )
     }
 }

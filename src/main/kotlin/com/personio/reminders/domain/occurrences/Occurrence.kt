@@ -1,6 +1,7 @@
 package com.personio.reminders.domain.occurrences
 
 import com.personio.reminders.domain.reminders.Reminder
+import java.time.Instant
 import java.util.UUID
 
 /**
@@ -11,6 +12,6 @@ data class Occurrence(
     val id: UUID,
     val reminder: Reminder,
     val isNotificationSent: Boolean = false,
-    val date: String,
+    val date: Instant,
     val isAcknowledged: Boolean
 )

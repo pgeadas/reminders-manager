@@ -7,7 +7,7 @@ import java.util.UUID
  * This is a Domain Driven Design Repository interface for the reminder's occurrences.
  */
 interface OccurrencesRepository {
-    fun create(reminderId: UUID, date: String): UUID
+    fun create(reminderId: UUID, instant: Instant): UUID
     fun findAt(instant: Instant): Collection<Occurrence>
     fun findAt(instant: Instant, employeeId: UUID): Collection<Occurrence>
     fun findBy(id: UUID): Occurrence?

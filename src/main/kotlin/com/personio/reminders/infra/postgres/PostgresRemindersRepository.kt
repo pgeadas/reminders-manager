@@ -51,7 +51,7 @@ class PostgresRemindersRepository(
             reminder.id,
             reminder.employeeId,
             reminder.text,
-            Instant.parse(reminder.date),
+            reminder.date,
             reminder.isRecurring,
             reminder.recurringInterval,
             reminder.recurringFrequency
@@ -79,7 +79,7 @@ class PostgresRemindersRepository(
             id = this.id,
             employeeId = this.employeeId,
             text = this.text,
-            date = this.timestamp.toString(),
+            date = this.timestamp,
             isRecurring = this.isRecurring,
             recurringInterval = this.recurrenceInterval,
             recurringFrequency = this.recurrenceFrequency

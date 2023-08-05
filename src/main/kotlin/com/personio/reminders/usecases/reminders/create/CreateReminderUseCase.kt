@@ -3,9 +3,9 @@ package com.personio.reminders.usecases.reminders.create
 import com.personio.reminders.domain.occurrences.OccurrencesRepository
 import com.personio.reminders.domain.reminders.Reminder
 import com.personio.reminders.domain.reminders.RemindersRepository
-import java.util.UUID
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.*
 
 /**
  * This class is a use case responsible for creating a new reminder for an employee.

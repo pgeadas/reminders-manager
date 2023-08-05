@@ -51,8 +51,8 @@ class RemindersEndpointTest {
             """
                 {
                     "employee_id": "5737a8cc-d04d-4d5d-894c-6ed57e4f8529",
-                    "text": "Buy Milk",
-                    "date": "2020-01-01"
+                    "text": "Make it work",
+                    "date": "2023-03-20" 
                 }
             """.trimIndent()
         mockMvc
@@ -96,7 +96,7 @@ class RemindersEndpointTest {
     }
 
     @Test
-    fun `findAll should return 200 with the existing reminders`() {
+    fun `findAll should return 200 with the existing reminders`() { //
         val id1 = UUID.fromString("4e8549a3-6d92-4f89-8ccd-6a21ca63cb39")
         val id2 = UUID.fromString("a11fc72b-baee-4980-8c64-d1da015db59d")
         val employeeId = UUID.fromString("8989c9c5-fb2e-45ef-b92a-c279ddf20f25")
