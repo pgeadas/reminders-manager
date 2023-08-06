@@ -1,8 +1,6 @@
 package com.personio.reminders.usecases.reminders.find
 
 import com.personio.reminders.domain.reminders.RemindersRepository
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.MessageSource
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -11,8 +9,7 @@ import java.util.*
  */
 @Service
 class FindRemindersUseCase(
-    private val remindersSettingsRepository: RemindersRepository,
-    @Autowired private val messageSource: MessageSource
+    private val remindersSettingsRepository: RemindersRepository
 ) {
 
     /**

@@ -2,7 +2,7 @@ package com.personio.reminders.usecases.occurrences.email
 
 import com.personio.reminders.domain.occurrences.OccurrencesRepository
 import com.personio.reminders.infra.mail.MailerService
-import com.personio.reminders.infra.mail.Message
+import com.personio.reminders.domain.email.Message
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import java.time.Clock

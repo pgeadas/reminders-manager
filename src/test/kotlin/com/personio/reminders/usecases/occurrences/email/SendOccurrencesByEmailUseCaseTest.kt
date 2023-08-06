@@ -1,15 +1,12 @@
 package com.personio.reminders.usecases.occurrences.email
 
+import com.personio.reminders.domain.email.Message
 import com.personio.reminders.helpers.MotherObject
 import com.personio.reminders.infra.mail.MailerService
-import com.personio.reminders.infra.mail.Message
 import com.personio.reminders.infra.postgres.occurrences.InMemoryOccurrencesRepository
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.any
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.times
-import org.mockito.kotlin.verify
+import org.mockito.kotlin.*
 import java.time.Clock
 import java.time.Duration
 
@@ -39,6 +36,11 @@ class SendOccurrencesByEmailUseCaseTest {
         subject.sendReminders()
 
         verify(mailer, times(2)).send(any())
+        val m1 = Message(occurrenceOne.reminder.text, occurrenceOne.reminder.employeeId)
+        val m2 = Message(occurrenceTwo.reminder.text, occurrenceTwo.reminder.employeeId)
+        verify(mailer).send(m1)
+        verify(mailer).send(m2)
+        verifyNoMoreInteractions(mailer)
     }
 
     @Test
@@ -68,6 +70,7 @@ class SendOccurrencesByEmailUseCaseTest {
                 reminderOne.employeeId
             )
         )
+        verifyNoMoreInteractions(mailer)
     }
 
     @Test
@@ -91,6 +94,8 @@ class SendOccurrencesByEmailUseCaseTest {
         subject.sendReminders()
 
         verify(mailer, times(1)).send(any())
+        verifyNoMoreInteractions(mailer) /*this verify allowed me to find the bug. It is also very important to check
+        for unwanted interactions, not only for wanted ones*/
     }
 
     @Test

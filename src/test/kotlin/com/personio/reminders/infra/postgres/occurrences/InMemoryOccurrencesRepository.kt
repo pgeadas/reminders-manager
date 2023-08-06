@@ -30,12 +30,15 @@ class InMemoryOccurrencesRepository(
         return occurrence.id
     }
 
+    // fixed issue where occurrences without reminders were being returned
     override fun findAt(instant: Instant): Collection<Occurrence> {
-        return occurrences.filter {
-            !it.isAcknowledged &&
-                it.date.isBefore(instant)
-        }
+        return occurrences
+            .filter { reminders.contains(it.reminder) }
+            .filter { isNotAcknowledgedNorExpired(it, instant) }
     }
+
+    private fun isNotAcknowledgedNorExpired(it: Occurrence, instant: Instant) =
+        !it.isAcknowledged && it.date.isBefore(instant)
 
     override fun findAt(instant: Instant, employeeId: UUID): Collection<Occurrence> {
         val reminderIds = reminders.filter {
@@ -58,8 +61,8 @@ class InMemoryOccurrencesRepository(
     override fun getInstantForNextReminderOccurrences(): Map<UUID, Instant> {
         val recurringReminders = reminders.filter {
             it.isRecurring &&
-            it.recurringFrequency != null &&
-            it.recurringInterval != null
+                it.recurringFrequency != null &&
+                it.recurringInterval != null
         }
 
         // fixed shadowing

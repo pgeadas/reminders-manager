@@ -4,6 +4,7 @@ import com.personio.reminders.helpers.MotherObject
 import com.personio.reminders.infra.postgres.occurrences.InMemoryOccurrencesRepository
 import com.personio.reminders.util.addToInstant
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
@@ -73,6 +74,9 @@ internal class GenerateNewOccurrencesUseCaseTest {
         useCase.generateNewOccurrences()
 
         assertEquals(2, occurrencesRepository.occurrences.size)
+        val lastOccurrence = occurrencesRepository.occurrences.last()
+        assertFalse(lastOccurrence.isAcknowledged)
+        assertFalse(lastOccurrence.isNotificationSent)
     }
 
     @Test
@@ -99,6 +103,8 @@ internal class GenerateNewOccurrencesUseCaseTest {
         useCase.generateNewOccurrences()
 
         assertEquals(1, occurrencesRepository.occurrences.size)
+        val lastOccurrence = occurrencesRepository.occurrences.last()
+        assertEquals(firstOccurrence, lastOccurrence)
     }
 
     @ParameterizedTest
