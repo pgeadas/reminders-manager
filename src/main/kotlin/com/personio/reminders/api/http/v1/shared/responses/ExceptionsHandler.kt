@@ -1,7 +1,5 @@
-package com.personio.reminders.api.http.v1
+package com.personio.reminders.api.http.v1.shared.responses
 
-import com.personio.reminders.api.http.v1.shared.responses.ApiError
-import com.personio.reminders.api.http.v1.shared.responses.ApiErrors
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.MessageSource

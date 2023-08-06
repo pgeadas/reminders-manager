@@ -1,4 +1,4 @@
-package com.personio.reminders.api.http.v1.reminders.requests
+package com.personio.reminders.api.http.v1.reminders.request
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.*

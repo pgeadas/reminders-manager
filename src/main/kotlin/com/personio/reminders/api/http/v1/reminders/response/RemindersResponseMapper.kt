@@ -1,4 +1,4 @@
-package com.personio.reminders.api.http.v1.reminders.responses
+package com.personio.reminders.api.http.v1.reminders.response
 
 import com.personio.reminders.domain.reminders.Reminder
 

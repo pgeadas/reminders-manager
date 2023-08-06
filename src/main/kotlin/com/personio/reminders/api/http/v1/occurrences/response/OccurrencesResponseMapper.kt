@@ -1,4 +1,4 @@
-package com.personio.reminders.api.http.v1.occurrences.responses
+package com.personio.reminders.api.http.v1.occurrences.response
 
 import com.personio.reminders.domain.occurrences.Occurrence
 

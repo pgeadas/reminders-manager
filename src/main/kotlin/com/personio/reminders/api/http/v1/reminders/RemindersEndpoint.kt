@@ -1,9 +1,9 @@
 package com.personio.reminders.api.http.v1.reminders
 
-import com.personio.reminders.api.http.v1.reminders.requests.CreateReminderCommandMapper
-import com.personio.reminders.api.http.v1.reminders.requests.CreateReminderRequest
-import com.personio.reminders.api.http.v1.reminders.responses.RemindersResponse
-import com.personio.reminders.api.http.v1.reminders.responses.RemindersResponseMapper
+import com.personio.reminders.api.http.v1.reminders.request.CreateReminderCommandMapper
+import com.personio.reminders.api.http.v1.reminders.request.CreateReminderRequest
+import com.personio.reminders.api.http.v1.reminders.response.RemindersResponse
+import com.personio.reminders.api.http.v1.reminders.response.RemindersResponseMapper
 import com.personio.reminders.api.http.v1.shared.responses.Response
 import com.personio.reminders.usecases.reminders.create.CreateReminderUseCase
 import com.personio.reminders.usecases.reminders.find.FindRemindersUseCase

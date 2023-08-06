@@ -1,6 +1,6 @@
 package com.personio.reminders.api.http.v1.occurrences
 
-import com.personio.reminders.api.http.v1.occurrences.responses.OccurrencesResponseMapper
+import com.personio.reminders.api.http.v1.occurrences.response.OccurrencesResponseMapper
 import com.personio.reminders.api.http.v1.shared.responses.ApiError
 import com.personio.reminders.api.http.v1.shared.responses.ApiErrors
 import com.personio.reminders.api.http.v1.shared.responses.Response
