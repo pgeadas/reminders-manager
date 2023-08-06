@@ -1,5 +1,6 @@
 package com.personio.reminders.api.http.v1
 
+import com.personio.reminders.api.http.v1.reminders.RemindersEndpoint
 import com.personio.reminders.helpers.MotherObject
 import com.personio.reminders.infra.configuration.DefaultTestConfiguration
 import com.personio.reminders.usecases.reminders.create.CreateReminderUseCase

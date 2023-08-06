@@ -1,7 +1,7 @@
 package com.personio.reminders.api.http.v1
 
-import com.personio.reminders.api.http.v1.responses.shared.ApiError
-import com.personio.reminders.api.http.v1.responses.shared.ApiErrors
+import com.personio.reminders.api.http.v1.shared.responses.ApiError
+import com.personio.reminders.api.http.v1.shared.responses.ApiErrors
 import com.personio.reminders.domain.reminders.exceptions.ReminderNotFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired

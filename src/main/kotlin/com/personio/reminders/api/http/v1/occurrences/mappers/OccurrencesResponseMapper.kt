@@ -1,6 +1,6 @@
-package com.personio.reminders.api.http.v1.mappers
+package com.personio.reminders.api.http.v1.occurrences.mappers
 
-import com.personio.reminders.api.http.v1.responses.OccurrencesResponse
+import com.personio.reminders.api.http.v1.occurrences.responses.OccurrencesResponse
 import com.personio.reminders.domain.occurrences.Occurrence
 
 class OccurrencesResponseMapper {

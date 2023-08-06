@@ -1,5 +1,7 @@
-package com.personio.reminders.api.http.v1.responses.shared
+package com.personio.reminders.api.http.v1
 
+import com.personio.reminders.api.http.v1.shared.responses.ApiError
+import com.personio.reminders.api.http.v1.shared.responses.ApiErrors
 import com.personio.reminders.usecases.UseCaseResult
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity

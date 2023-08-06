@@ -1,4 +1,4 @@
-package com.personio.reminders.api.http.v1.responses
+package com.personio.reminders.api.http.v1.occurrences.responses
 
 data class OccurrencesResponse(
     val id: String,

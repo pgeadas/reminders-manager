@@ -1,9 +1,9 @@
-package com.personio.reminders.api.http.v1
+package com.personio.reminders.api.http.v1.occurrences
 
-import com.personio.reminders.api.http.v1.mappers.OccurrencesResponseMapper
-import com.personio.reminders.api.http.v1.responses.shared.ApiErrors
-import com.personio.reminders.api.http.v1.responses.shared.Response
-import com.personio.reminders.api.http.v1.responses.shared.UseCaseResultToResponseMapper
+import com.personio.reminders.api.http.v1.occurrences.mappers.OccurrencesResponseMapper
+import com.personio.reminders.api.http.v1.shared.responses.ApiErrors
+import com.personio.reminders.api.http.v1.shared.responses.Response
+import com.personio.reminders.api.http.v1.UseCaseResultToResponseMapper
 import com.personio.reminders.usecases.occurrences.complete.AcknowledgeOccurrenceUseCase
 import com.personio.reminders.usecases.occurrences.find.FindOccurrencesUseCase
 import jakarta.servlet.http.HttpServletRequest

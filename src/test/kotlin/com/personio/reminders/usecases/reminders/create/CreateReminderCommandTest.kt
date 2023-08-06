@@ -22,7 +22,7 @@ internal class CreateReminderCommandTest {
             recurringFrequency = null
         )
 
-        val reminder = ReminderMapper.fromCommand(command)
+        val reminder = command.toReminder()
 
         assertEquals(command.employeeId, reminder.employeeId)
         assertEquals(command.text, reminder.text)

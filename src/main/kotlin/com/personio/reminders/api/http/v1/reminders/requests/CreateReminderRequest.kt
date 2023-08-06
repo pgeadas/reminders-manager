@@ -1,4 +1,4 @@
-package com.personio.reminders.api.http.v1.requests
+package com.personio.reminders.api.http.v1.reminders.requests
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.UUID

@@ -1,6 +1,6 @@
-package com.personio.reminders.api.http.v1.mappers
+package com.personio.reminders.api.http.v1.reminders.mappers
 
-import com.personio.reminders.api.http.v1.responses.RemindersResponse
+import com.personio.reminders.api.http.v1.reminders.responses.RemindersResponse
 import com.personio.reminders.domain.reminders.Reminder
 
 class RemindersResponseMapper {

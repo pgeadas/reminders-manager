@@ -1,9 +1,9 @@
-package com.personio.reminders.api.http.v1
+package com.personio.reminders.api.http.v1.reminders
 
-import com.personio.reminders.api.http.v1.mappers.RemindersResponseMapper
-import com.personio.reminders.api.http.v1.requests.CreateReminderRequest
-import com.personio.reminders.api.http.v1.responses.shared.Response
-import com.personio.reminders.usecases.reminders.create.CreateReminderCommand
+import com.personio.reminders.api.http.v1.reminders.mappers.RemindersResponseMapper
+import com.personio.reminders.api.http.v1.reminders.mappers.CreateReminderCommandMapper
+import com.personio.reminders.api.http.v1.reminders.requests.CreateReminderRequest
+import com.personio.reminders.api.http.v1.shared.responses.Response
 import com.personio.reminders.usecases.reminders.create.CreateReminderUseCase
 import com.personio.reminders.usecases.reminders.find.FindRemindersUseCase
 import java.util.UUID
@@ -42,7 +42,7 @@ class RemindersEndpoint(
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun create(@RequestBody request: CreateReminderRequest) {
-        createUseCase.create(CreateReminderCommand.fromRequest(request))
+        createUseCase.create(CreateReminderCommandMapper.fromRequest(request))
         return
     }
 

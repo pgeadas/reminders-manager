@@ -1,5 +1,6 @@
 package com.personio.reminders.api.http.v1
 
+import com.personio.reminders.api.http.v1.occurrences.OccurrencesEndpoint
 import com.personio.reminders.helpers.MotherObject
 import com.personio.reminders.infra.configuration.DefaultTestConfiguration
 import com.personio.reminders.usecases.occurrences.complete.AcknowledgeOccurrenceUseCase
