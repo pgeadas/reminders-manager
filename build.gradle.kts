@@ -1,6 +1,5 @@
 import dev.monosoul.jooq.GenerateJooqClassesTask
 import dev.monosoul.jooq.RecommendedVersions
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 repositories {
     mavenCentral()

@@ -1,20 +1,16 @@
 package com.personio.reminders.api.http.v1.reminders
 
-import com.personio.reminders.api.http.v1.reminders.mappers.RemindersResponseMapper
-import com.personio.reminders.api.http.v1.reminders.mappers.CreateReminderCommandMapper
+import com.personio.reminders.api.http.v1.reminders.requests.CreateReminderCommandMapper
 import com.personio.reminders.api.http.v1.reminders.requests.CreateReminderRequest
+import com.personio.reminders.api.http.v1.reminders.responses.RemindersResponse
+import com.personio.reminders.api.http.v1.reminders.responses.RemindersResponseMapper
 import com.personio.reminders.api.http.v1.shared.responses.Response
 import com.personio.reminders.usecases.reminders.create.CreateReminderUseCase
 import com.personio.reminders.usecases.reminders.find.FindRemindersUseCase
-import java.util.UUID
+import com.personio.reminders.usecases.reminders.find.FindRemindersUseCaseResult
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.ResponseStatus
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
+import java.util.*
 
 /**
  * This is a controller (interface adapter) used by the web interface.
@@ -52,8 +48,12 @@ class RemindersEndpoint(
      * This endpoint returns a `200 OK` status code to the client along with a JSON containing all the employee's reminders.
      */
     @GetMapping
-    fun findAll(@RequestParam(required = true) employeeId: UUID) = Response(
-        findUseCase.findAll(employeeId)
-            .map(RemindersResponseMapper::toResponse)
-    )
+    fun findAll(@RequestParam(required = true) employeeId: UUID): Response<Collection<RemindersResponse>> {
+        val result = findUseCase.findAll(employeeId)
+        return when (result) {
+            is FindRemindersUseCaseResult.Success -> Response(result.data.map(RemindersResponseMapper::toResponse))
+            // TODO:return the error message also like in the other endpoint
+            is FindRemindersUseCaseResult.NotFound -> Response(Collections.emptyList())
+        }
+    }
 }

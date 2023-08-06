@@ -2,7 +2,7 @@ package com.personio.reminders.domain.occurrences
 
 import com.personio.reminders.domain.reminders.Reminder
 import java.time.Instant
-import java.util.UUID
+import java.util.*
 
 /**
  * This is a Domain Driven Design Entity for a reminder's occurrence.

@@ -2,12 +2,12 @@ package com.personio.reminders.usecases.occurrences.find
 
 import com.personio.reminders.helpers.MotherObject
 import com.personio.reminders.infra.postgres.occurrences.InMemoryOccurrencesRepository
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
 import java.time.Clock
 import java.time.Duration
 import java.time.Instant
-import java.util.UUID
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Test
+import java.util.*
 
 /**
  * Unit tests for the FindRemindersOccurrencesUseCase class.

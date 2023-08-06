@@ -4,14 +4,14 @@ import com.personio.reminders.helpers.MotherObject
 import com.personio.reminders.infra.mail.MailerService
 import com.personio.reminders.infra.mail.Message
 import com.personio.reminders.infra.postgres.occurrences.InMemoryOccurrencesRepository
-import java.time.Clock
-import java.time.Duration
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
+import java.time.Clock
+import java.time.Duration
 
 /**
  * Unit tests for the SendOccurrencesByEmailUseCase class.

@@ -6,7 +6,6 @@ import com.personio.reminders.domain.reminders.RemindersRepository
 import com.personio.reminders.infra.postgres.PostgresRemindersRepository
 import com.personio.reminders.infra.postgres.container.PostgresSpringTest
 import com.personio.reminders.infra.postgres.container.TestDatabase
-import java.time.Instant
 import org.jooq.DSLContext
 import org.jooq.generated.Tables.OCCURRENCES
 import org.jooq.generated.Tables.REMINDERS

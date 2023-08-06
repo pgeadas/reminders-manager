@@ -1,14 +1,16 @@
 package com.personio.reminders.api.http.v1.occurrences
 
-import com.personio.reminders.api.http.v1.occurrences.mappers.OccurrencesResponseMapper
+import com.personio.reminders.api.http.v1.occurrences.responses.OccurrencesResponseMapper
+import com.personio.reminders.api.http.v1.shared.responses.ApiError
 import com.personio.reminders.api.http.v1.shared.responses.ApiErrors
 import com.personio.reminders.api.http.v1.shared.responses.Response
-import com.personio.reminders.api.http.v1.UseCaseResultToResponseMapper
 import com.personio.reminders.usecases.occurrences.complete.AcknowledgeOccurrenceUseCase
+import com.personio.reminders.usecases.occurrences.complete.AcknowledgeUseCaseResult
 import com.personio.reminders.usecases.occurrences.find.FindOccurrencesUseCase
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.MessageSource
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.util.*
@@ -49,9 +51,17 @@ class OccurrencesEndpoint(
     @PutMapping("{id}")
     fun acknowledge(@PathVariable id: UUID, request: HttpServletRequest): ResponseEntity<ApiErrors> {
         val result = acknowledgeUseCase.acknowledge(id)
-        val messageRetriever: (String) -> String = { message ->
-            messageSource.getMessage(message, null, request.locale)
+        return when (result) {
+            is AcknowledgeUseCaseResult.Success -> ResponseEntity.noContent().build()
+            is AcknowledgeUseCaseResult.NotFound -> withApiError(
+                HttpStatus.NOT_FOUND,
+                messageSource.getMessage(result.message, null, request.locale)
+            )
         }
-        return UseCaseResultToResponseMapper.createResponseEntityFromResult(result, messageRetriever)
+    }
+
+    private fun withApiError(status: HttpStatus, message: String): ResponseEntity<ApiErrors> {
+        val apiError = ApiError(UUID.randomUUID().toString(), status.toString(), message, null)
+        return ResponseEntity(ApiErrors(listOf(apiError)), status)
     }
 }

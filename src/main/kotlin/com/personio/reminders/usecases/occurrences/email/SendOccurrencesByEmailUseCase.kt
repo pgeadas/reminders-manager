@@ -3,10 +3,10 @@ package com.personio.reminders.usecases.occurrences.email
 import com.personio.reminders.domain.occurrences.OccurrencesRepository
 import com.personio.reminders.infra.mail.MailerService
 import com.personio.reminders.infra.mail.Message
-import java.time.Clock
-import java.time.Instant
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
+import java.time.Clock
+import java.time.Instant
 
 /**
  * This class is a use case responsible for notifying employees by email about their reminder's occurrences.

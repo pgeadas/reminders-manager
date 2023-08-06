@@ -1,12 +1,12 @@
 package com.personio.reminders.infra.postgres.container
 
-import javax.sql.DataSource
 import org.jooq.DSLContext
 import org.jooq.SQLDialect
 import org.jooq.impl.DefaultConfiguration
 import org.jooq.impl.DefaultDSLContext
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.context.annotation.Bean
+import javax.sql.DataSource
 
 /**
  * Exposes PersonioPostgresContainer, DataSource and DSLContext as beans which can be used in Tests.

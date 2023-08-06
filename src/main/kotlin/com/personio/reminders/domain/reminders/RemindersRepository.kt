@@ -1,6 +1,6 @@
 package com.personio.reminders.domain.reminders
 
-import java.util.UUID
+import java.util.*
 
 /**
  * This is a Domain Driven Design Repository interface for the reminder's.

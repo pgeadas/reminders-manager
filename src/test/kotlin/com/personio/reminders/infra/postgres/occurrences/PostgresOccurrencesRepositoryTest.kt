@@ -6,8 +6,6 @@ import com.personio.reminders.domain.reminders.Reminder
 import com.personio.reminders.infra.postgres.PostgresOccurrencesRepository
 import com.personio.reminders.infra.postgres.container.PostgresSpringTest
 import com.personio.reminders.infra.postgres.container.TestDatabase
-import java.time.Clock
-import java.time.Instant
 import org.jooq.DSLContext
 import org.jooq.generated.Tables.OCCURRENCES
 import org.jooq.generated.Tables.REMINDERS
@@ -15,6 +13,7 @@ import org.junit.jupiter.api.AfterEach
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
+import java.time.Clock
 
 /**
  * This class configures the postgres repository to be used in the tests defined in the RemindersOccurrencesRepositoryContractTest class.

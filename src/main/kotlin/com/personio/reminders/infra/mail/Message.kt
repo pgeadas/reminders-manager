@@ -1,6 +1,6 @@
 package com.personio.reminders.infra.mail
 
-import java.util.UUID
+import java.util.*
 
 /**
 * This is a message abstraction that would in real life contain all the necessary data for an email.

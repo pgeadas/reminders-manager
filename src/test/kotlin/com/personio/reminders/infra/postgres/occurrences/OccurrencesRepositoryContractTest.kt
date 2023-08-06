@@ -4,11 +4,11 @@ import com.personio.reminders.domain.occurrences.Occurrence
 import com.personio.reminders.domain.occurrences.OccurrencesRepository
 import com.personio.reminders.domain.reminders.Reminder
 import com.personio.reminders.helpers.MotherObject
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Test
 import java.time.Clock
 import java.time.Instant
 import java.time.temporal.ChronoUnit
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
 
 private const val FREQUENCY_DAY = 1
 

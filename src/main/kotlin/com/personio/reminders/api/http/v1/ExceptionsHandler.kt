@@ -2,7 +2,6 @@ package com.personio.reminders.api.http.v1
 
 import com.personio.reminders.api.http.v1.shared.responses.ApiError
 import com.personio.reminders.api.http.v1.shared.responses.ApiErrors
-import com.personio.reminders.domain.reminders.exceptions.ReminderNotFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.MessageSource
@@ -38,16 +37,16 @@ class ExceptionsHandler(@Autowired private val messageSource: MessageSource) {
     }
 
     @ExceptionHandler(
-        value = [HttpMessageNotReadableException::class, MissingServletRequestParameterException::class, IllegalArgumentException::class]
+        value = [
+            HttpMessageNotReadableException::class,
+            MissingServletRequestParameterException::class,
+            IllegalArgumentException::class
+        ]
     )
     fun handleInvalidInputException(ex: Exception, request: WebRequest, locale: Locale) =
         responseWithApiError(
             HttpStatus.BAD_REQUEST, messageSource.getMessage("invalid-input", null, locale), ex.message, ex
         )
-
-    @ExceptionHandler(value = [ReminderNotFoundException::class])
-    fun handleNotFoundException(ex: Exception, request: WebRequest, locale: Locale) =
-        responseWithApiError(HttpStatus.NOT_FOUND, ex, locale)
 
     fun mapError(uuid: String, ex: Exception, req: WebRequest) =
         ApiError(uuid, "500 INTERNAL_SERVER_ERROR", "Something went wrong", null)
@@ -65,15 +64,5 @@ class ExceptionsHandler(@Autowired private val messageSource: MessageSource) {
             ),
             status
         )
-    }
-
-    fun responseWithApiError(
-        status: HttpStatus,
-        exception: Throwable,
-        locale: Locale
-    ): ResponseEntity<ApiErrors> {
-        val message =
-            messageSource.getMessage(exception.message ?: "", exception.stackTrace, locale)
-        return responseWithApiError(status, message, exception.message, exception)
     }
 }

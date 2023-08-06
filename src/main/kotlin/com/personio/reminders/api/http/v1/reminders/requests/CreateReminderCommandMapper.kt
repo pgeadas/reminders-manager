@@ -1,6 +1,5 @@
-package com.personio.reminders.api.http.v1.reminders.mappers
+package com.personio.reminders.api.http.v1.reminders.requests
 
-import com.personio.reminders.api.http.v1.reminders.requests.CreateReminderRequest
 import com.personio.reminders.usecases.reminders.create.CreateReminderCommand
 
 class CreateReminderCommandMapper {

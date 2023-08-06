@@ -2,9 +2,10 @@ package com.personio.reminders.usecases.reminders.find
 
 import com.personio.reminders.helpers.MotherObject
 import com.personio.reminders.infra.postgres.settings.InMemoryRemindersRepository
-import java.util.UUID
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import java.util.*
 
 /**
  * Unit tests for the FindRemindersUseCase class.
@@ -25,6 +26,7 @@ internal class FindRemindersUseCaseTest {
 
         val foundReminders = useCase.findAll(employeeId)
 
-        assertEquals(listOf(r1, r2), foundReminders)
+        assertTrue(foundReminders is FindRemindersUseCaseResult.Success)
+        assertEquals(listOf(r1, r2), (foundReminders as FindRemindersUseCaseResult.Success).data)
     }
 }

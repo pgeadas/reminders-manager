@@ -3,10 +3,10 @@ package com.personio.reminders.infra.postgres.settings
 import com.personio.reminders.domain.reminders.Reminder
 import com.personio.reminders.domain.reminders.RemindersRepository
 import com.personio.reminders.helpers.MotherObject
-import java.util.UUID
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
+import java.util.*
 
 /**
  * This test interface is used by the "postgres repository implementation" and by the "in-memory repository implementation".

@@ -5,6 +5,7 @@ import com.personio.reminders.helpers.MotherObject
 import com.personio.reminders.infra.configuration.DefaultTestConfiguration
 import com.personio.reminders.usecases.reminders.create.CreateReminderUseCase
 import com.personio.reminders.usecases.reminders.find.FindRemindersUseCase
+import com.personio.reminders.usecases.reminders.find.FindRemindersUseCaseResult
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.any
@@ -101,12 +102,14 @@ class RemindersEndpointTest {
         val employeeId = UUID.fromString("8989c9c5-fb2e-45ef-b92a-c279ddf20f25")
         whenever(findUseCase.findAll(employeeId))
             .thenReturn(
-                listOf(
-                    MotherObject.reminders().new(
-                        id1, employeeId, "Buy milk", Instant.ofEpochMilli(1648818004000)
-                    ),
-                    MotherObject.reminders().new(
-                        id2, employeeId, "Hire great engineers", Instant.ofEpochMilli(1648738592000)
+                FindRemindersUseCaseResult.Success(
+                    listOf(
+                        MotherObject.reminders().new(
+                            id1, employeeId, "Buy milk", Instant.ofEpochMilli(1648818004000)
+                        ),
+                        MotherObject.reminders().new(
+                            id2, employeeId, "Hire great engineers", Instant.ofEpochMilli(1648738592000)
+                        )
                     )
                 )
             )

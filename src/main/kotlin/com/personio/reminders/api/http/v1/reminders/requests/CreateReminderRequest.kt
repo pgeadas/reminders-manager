@@ -1,7 +1,7 @@
 package com.personio.reminders.api.http.v1.reminders.requests
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import java.util.UUID
+import java.util.*
 
 data class CreateReminderRequest(
     val text: String,

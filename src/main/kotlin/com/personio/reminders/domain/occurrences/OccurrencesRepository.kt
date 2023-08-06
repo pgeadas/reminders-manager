@@ -1,7 +1,7 @@
 package com.personio.reminders.domain.occurrences
 
 import java.time.Instant
-import java.util.UUID
+import java.util.*
 
 /**
  * This is a Domain Driven Design Repository interface for the reminder's occurrences.

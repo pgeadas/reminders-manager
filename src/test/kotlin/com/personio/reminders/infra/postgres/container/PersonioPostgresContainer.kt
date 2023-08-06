@@ -2,10 +2,10 @@ package com.personio.reminders.infra.postgres.container
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import javax.sql.DataSource
 import org.flywaydb.core.Flyway
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.containers.wait.strategy.Wait
+import javax.sql.DataSource
 
 /**
  * A test container which runs a PostgreSQL instance.

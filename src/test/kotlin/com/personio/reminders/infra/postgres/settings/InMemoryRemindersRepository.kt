@@ -2,7 +2,7 @@ package com.personio.reminders.infra.postgres.settings
 
 import com.personio.reminders.domain.reminders.Reminder
 import com.personio.reminders.domain.reminders.RemindersRepository
-import java.util.UUID
+import java.util.*
 
 /**
  * In-memory repository implementation used in the unit tests.

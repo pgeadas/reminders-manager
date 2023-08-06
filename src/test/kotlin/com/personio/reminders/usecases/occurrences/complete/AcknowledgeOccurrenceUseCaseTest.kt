@@ -2,7 +2,6 @@ package com.personio.reminders.usecases.occurrences.complete
 
 import com.personio.reminders.helpers.MotherObject
 import com.personio.reminders.infra.postgres.occurrences.InMemoryOccurrencesRepository
-import com.personio.reminders.usecases.UseCaseResult
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
@@ -39,6 +38,6 @@ internal class AcknowledgeOccurrenceUseCaseTest {
         val useCase = AcknowledgeOccurrenceUseCase(repo)
         val result = useCase.acknowledge(UUID.randomUUID())
 
-        assertEquals(UseCaseResult.NotFound(), result)
+        assertEquals(AcknowledgeUseCaseResult.NotFound(), result)
     }
 }

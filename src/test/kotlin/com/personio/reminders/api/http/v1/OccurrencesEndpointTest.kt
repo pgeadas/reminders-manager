@@ -4,8 +4,8 @@ import com.personio.reminders.api.http.v1.occurrences.OccurrencesEndpoint
 import com.personio.reminders.helpers.MotherObject
 import com.personio.reminders.infra.configuration.DefaultTestConfiguration
 import com.personio.reminders.usecases.occurrences.complete.AcknowledgeOccurrenceUseCase
+import com.personio.reminders.usecases.occurrences.complete.AcknowledgeUseCaseResult
 import com.personio.reminders.usecases.occurrences.find.FindOccurrencesUseCase
-import com.personio.reminders.usecases.UseCaseResult
 import org.hamcrest.Matchers
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.doReturn
@@ -108,7 +108,7 @@ class OccurrencesEndpointTest {
 
     @Test
     fun `acknowledge should return 204 status when an existing reminder is deleted`() {
-        doReturn(UseCaseResult.Success).whenever(acknowledgeUseCase)
+        doReturn(AcknowledgeUseCaseResult.Success).whenever(acknowledgeUseCase)
             .acknowledge(id = UUID.fromString("a2999215-db7d-49e9-91eb-15038e50182c"))
         mockMvc
             .perform(
@@ -123,7 +123,7 @@ class OccurrencesEndpointTest {
     @Test
     fun `acknowledge should return 404 status when trying to acknowledge a non-existing occurrence`() {
         whenever(acknowledgeUseCase.acknowledge(id = UUID.fromString("a2999215-db7d-49e9-91eb-15038e50182c")))
-            .thenReturn(UseCaseResult.NotFound())
+            .thenReturn(AcknowledgeUseCaseResult.NotFound())
         mockMvc
             .perform(
                 MockMvcRequestBuilders.put("/occurrences/a2999215-db7d-49e9-91eb-15038e50182c")

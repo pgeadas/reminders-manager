@@ -1,10 +1,10 @@
 package com.personio.reminders.usecases.occurrences.find
 
 import com.personio.reminders.domain.occurrences.OccurrencesRepository
+import org.springframework.stereotype.Service
 import java.time.Clock
 import java.time.Instant
-import java.util.UUID
-import org.springframework.stereotype.Service
+import java.util.*
 
 /**
  * This class is a use case responsible for retrieving all reminder's occurrences of a specific employee.

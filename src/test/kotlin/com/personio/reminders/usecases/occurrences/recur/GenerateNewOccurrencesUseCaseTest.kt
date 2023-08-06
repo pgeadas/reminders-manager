@@ -3,8 +3,6 @@ package com.personio.reminders.usecases.occurrences.recur
 import com.personio.reminders.helpers.MotherObject
 import com.personio.reminders.infra.postgres.occurrences.InMemoryOccurrencesRepository
 import com.personio.reminders.util.addToInstant
-import java.time.Instant
-import java.time.temporal.ChronoUnit
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -12,6 +10,8 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import org.slf4j.helpers.NOPLogger
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 
 /**
  * Unit tests for the GenerateNewOccurrencesUseCase class.
