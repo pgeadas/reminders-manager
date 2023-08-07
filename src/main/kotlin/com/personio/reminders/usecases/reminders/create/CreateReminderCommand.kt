@@ -17,7 +17,7 @@ data class CreateReminderCommand(
     val recurringFrequency: Int?
 ) {
 
-    fun toReminder(): Reminder {
+    fun createReminder(): Reminder {
         return Reminder(
             id = UUID.randomUUID(),
             employeeId = this.employeeId,
@@ -30,17 +30,17 @@ data class CreateReminderCommand(
     }
 
     private fun toInstant(dateString: String): Instant {
-        return try {
+        val instant = try {
             Instant.parse(dateString)
         } catch (e: Exception) {
-            return try {
+            try {
                 val localDate = LocalDate.parse(dateString, DateTimeFormatter.ISO_DATE)
-                val instant = localDate.atStartOfDay(ZoneOffset.UTC).toInstant()
-                require(instant.isAfter(Instant.now())) { "Date cannot be in the past: $dateString" }
-                instant
+                localDate.atStartOfDay(ZoneOffset.UTC).toInstant()
             } catch (e: Exception) {
                 throw IllegalArgumentException("Invalid date: $dateString", e)
             }
         }
+        require(instant.isAfter(Instant.now())) { "Date cannot be in the past: $dateString" }
+        return instant
     }
 }

@@ -31,7 +31,8 @@ interface OccurrencesRepositoryContractTest {
             mutableListOf(
                 reminder
             ),
-            mutableListOf(), MotherObject.clock
+            mutableListOf(),
+            MotherObject.clock
         )
 
         val occurrenceId = repo.create(reminder.id, reminder.date)
@@ -98,7 +99,7 @@ interface OccurrencesRepositoryContractTest {
         val recurringReminder = MotherObject.reminders().new(
             date = date,
             isRecurring = true,
-            recurringFrequency = FREQUENCY_DAY, // 1 DAY
+            recurringFrequency = FREQUENCY_DAY,
             recurringInterval = 1
         )
         val nonRecurringReminder = MotherObject.reminders().new(

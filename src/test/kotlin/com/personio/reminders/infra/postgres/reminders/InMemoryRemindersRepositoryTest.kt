@@ -1,4 +1,4 @@
-package com.personio.reminders.infra.postgres.settings
+package com.personio.reminders.infra.postgres.reminders
 
 import com.personio.reminders.domain.reminders.Reminder
 import com.personio.reminders.domain.reminders.RemindersRepository

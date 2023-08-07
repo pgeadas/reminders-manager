@@ -5,7 +5,7 @@ import com.personio.reminders.api.http.v1.shared.responses.ApiError
 import com.personio.reminders.api.http.v1.shared.responses.ApiErrors
 import com.personio.reminders.api.http.v1.shared.responses.Response
 import com.personio.reminders.usecases.occurrences.complete.AcknowledgeOccurrenceUseCase
-import com.personio.reminders.usecases.occurrences.complete.AcknowledgeUseCaseResult
+import com.personio.reminders.usecases.occurrences.complete.AcknowledgeOccurrenceUseCaseResult
 import com.personio.reminders.usecases.occurrences.find.FindOccurrencesUseCase
 import jakarta.servlet.http.HttpServletRequest
 import org.springframework.beans.factory.annotation.Autowired
@@ -52,8 +52,8 @@ class OccurrencesEndpoint(
     fun acknowledge(@PathVariable id: UUID, request: HttpServletRequest): ResponseEntity<ApiErrors> {
         val result = acknowledgeUseCase.acknowledge(id)
         return when (result) {
-            is AcknowledgeUseCaseResult.Success -> ResponseEntity.noContent().build()
-            is AcknowledgeUseCaseResult.NotFound -> withApiError(
+            is AcknowledgeOccurrenceUseCaseResult.Success -> ResponseEntity.noContent().build()
+            is AcknowledgeOccurrenceUseCaseResult.NotFound -> withApiError(
                 HttpStatus.NOT_FOUND,
                 messageSource.getMessage(result.message, null, request.locale)
             )

@@ -1,8 +1,9 @@
 package com.personio.reminders.usecases.occurrences.email
 
+import com.personio.reminders.domain.email.Message
+import com.personio.reminders.domain.occurrences.Occurrence
 import com.personio.reminders.domain.occurrences.OccurrencesRepository
 import com.personio.reminders.infra.mail.MailerService
-import com.personio.reminders.domain.email.Message
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import java.time.Clock
@@ -29,11 +30,13 @@ class SendOccurrencesByEmailUseCase(
     @Scheduled(cron = "0 */5 * * * *")
     fun sendReminders() = occurrences.findAt(Instant.now(clock))
         .filter { !it.isNotificationSent }
-        .forEach { occurrence ->
-            val message = Message(occurrence.reminder.text, occurrence.reminder.employeeId)
-            mailer.send(message)
-            occurrences.markAsNotified(occurrence)
-        }
+        .forEach { occurrence -> sendMessageAndMarkAsNotified(occurrence) }
+
+    private fun sendMessageAndMarkAsNotified(occurrence: Occurrence) {
+        val message = Message(occurrence.reminder.text, occurrence.reminder.employeeId)
+        mailer.send(message)
+        occurrences.markAsNotified(occurrence)
+    }
 }
 
 // How does this ensure that we only send a single email, if we scale the app horizontally?

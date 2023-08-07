@@ -38,6 +38,6 @@ internal class AcknowledgeOccurrenceUseCaseTest {
         val useCase = AcknowledgeOccurrenceUseCase(repo)
         val result = useCase.acknowledge(UUID.randomUUID())
 
-        assertEquals(AcknowledgeUseCaseResult.NotFound(), result)
+        assertEquals(AcknowledgeOccurrenceUseCaseResult.NotFound(), result)
     }
 }

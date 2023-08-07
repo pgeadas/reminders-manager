@@ -1,8 +1,10 @@
 package com.personio.reminders.api.http.v1
 
 import com.personio.reminders.api.http.v1.reminders.RemindersEndpoint
+import com.personio.reminders.api.http.v1.reminders.request.CreateReminderCommandMapper
 import com.personio.reminders.helpers.MotherObject
 import com.personio.reminders.infra.configuration.DefaultTestConfiguration
+import com.personio.reminders.usecases.reminders.create.CreateReminderCommand
 import com.personio.reminders.usecases.reminders.create.CreateReminderUseCase
 import com.personio.reminders.usecases.reminders.find.FindRemindersUseCase
 import com.personio.reminders.usecases.reminders.find.FindRemindersUseCaseResult
@@ -64,6 +66,43 @@ class RemindersEndpointTest {
             )
             .andExpect(MockMvcResultMatchers.status().isCreated)
             .andExpect(MockMvcResultMatchers.jsonPath("$").doesNotExist())
+    }
+
+    // Cant really tests the correct behaviour of the invalid date this way
+    @Test
+    fun `create should return 400 status when date is invalid`() {
+        val jsonPayload =
+            """
+                {
+                    "employee_id": "5737a8cc-d04d-4d5d-894c-6ed57e4f8529",
+                    "text": "Buy milk",
+                    "date: "any"
+                }
+            """.trimIndent()
+        mockMvc
+            .perform(
+                MockMvcRequestBuilders.post("/reminders")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(jsonPayload)
+                    .characterEncoding("utf-8")
+            )
+            .andExpect(MockMvcResultMatchers.status().`is`(HttpStatus.BAD_REQUEST.value()))
+            .andExpect(
+                MockMvcResultMatchers.jsonPath("$.errors[0].status")
+                    .value(HttpStatus.BAD_REQUEST.toString())
+            )
+            .andExpect(
+                MockMvcResultMatchers.jsonPath("$.errors[0].title")
+                    .value(
+                        Matchers.containsString("Invalid input provided")
+                    )
+            )
+//            .andExpect(
+//                MockMvcResultMatchers.jsonPath("$.errors[0].detail")
+//                    .value(
+//                        Matchers.containsString("invalid date")
+//                    )
+//            )
     }
 
     @Test

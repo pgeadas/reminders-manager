@@ -51,8 +51,7 @@ class RemindersEndpoint(
     fun findAll(@RequestParam(required = true) employeeId: UUID): Response<Collection<RemindersResponse>> {
         val result = findUseCase.findAll(employeeId)
         return when (result) {
-            is FindRemindersUseCaseResult.Success -> Response(result.data.map(RemindersResponseMapper::toResponse))
-            // TODO:return the error message also like in the other endpoint
+            is FindRemindersUseCaseResult.Success -> Response(RemindersResponseMapper.toResponse(result.data))
             is FindRemindersUseCaseResult.NotFound -> Response(Collections.emptyList())
         }
     }

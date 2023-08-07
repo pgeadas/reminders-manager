@@ -6,6 +6,7 @@ import com.personio.reminders.domain.occurrences.OccurrencesRepository
 import com.personio.reminders.domain.reminders.Reminder
 import com.personio.reminders.util.addToInstant
 import org.jooq.DSLContext
+import org.jooq.Record5
 import org.jooq.generated.tables.Occurrences.OCCURRENCES
 import org.jooq.generated.tables.Reminders.REMINDERS
 import org.jooq.generated.tables.records.OccurrencesRecord
@@ -137,22 +138,30 @@ class PostgresOccurrencesRepository(
 
         val nextRemindersInstants = remindersLastOccurrences
             .filter {
-                val lastOccurrenceTimestamp = it[LAST_OCCURRENCE_TIMESTAMP] as Instant?
-                lastOccurrenceTimestamp == null || lastOccurrenceTimestamp <= Instant.now(clock)
+                recurringRemindersWithZeroOrExpiredOccurrences(it)
             }.map {
-                val lastOccurrenceTimestamp = it[LAST_OCCURRENCE_TIMESTAMP] as Instant?
-                val instantOfNextOccurrence = if (lastOccurrenceTimestamp == null) {
-                    it[REMINDERS.TIMESTAMP]
-                } else {
-                    val unit = convertFrequencyToChronoUnit(it[REMINDERS.RECURRENCE_FREQUENCY])
-                    val interval = it[REMINDERS.RECURRENCE_INTERVAL].toLong()
-                    unit.addToInstant(lastOccurrenceTimestamp, interval, clock)
-                }
-
-                it[REMINDERS.ID] to instantOfNextOccurrence
+                toPairOfReminderIdAndNextOccurrenceInstant(it)
             }
 
         return nextRemindersInstants.toMap()
+    }
+
+    private fun recurringRemindersWithZeroOrExpiredOccurrences(it: Record5<UUID, Instant, Int, Int, Instant>): Boolean {
+        val lastOccurrenceTimestamp = it[LAST_OCCURRENCE_TIMESTAMP] as Instant?
+        return lastOccurrenceTimestamp == null || lastOccurrenceTimestamp <= Instant.now(clock)
+    }
+
+    private fun toPairOfReminderIdAndNextOccurrenceInstant(it: Record5<UUID, Instant, Int, Int, Instant>): Pair<UUID, Instant> {
+        val lastOccurrenceTimestamp = it[LAST_OCCURRENCE_TIMESTAMP] as Instant?
+        val instantOfNextOccurrence = if (lastOccurrenceTimestamp == null) {
+            it[REMINDERS.TIMESTAMP]
+        } else {
+            val unit = convertFrequencyToChronoUnit(it[REMINDERS.RECURRENCE_FREQUENCY])
+            val interval = it[REMINDERS.RECURRENCE_INTERVAL].toLong()
+            unit.addToInstant(lastOccurrenceTimestamp, interval, clock)
+        }
+
+        return it[REMINDERS.ID] to instantOfNextOccurrence
     }
 
     override fun markAsNotified(occurrence: Occurrence) {

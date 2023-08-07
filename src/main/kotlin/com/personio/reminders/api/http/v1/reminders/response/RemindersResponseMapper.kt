@@ -4,7 +4,11 @@ import com.personio.reminders.domain.reminders.Reminder
 
 class RemindersResponseMapper {
     companion object {
-        fun toResponse(reminder: Reminder) =
+        fun toResponse(reminders: Collection<Reminder>): Collection<RemindersResponse> {
+            return reminders.map { r -> toResponse(r) }
+        }
+
+        private fun toResponse(reminder: Reminder) =
             RemindersResponse(
                 reminder.id.toString(),
                 reminder.text,

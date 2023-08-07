@@ -1,10 +1,9 @@
-package com.personio.reminders.infra.postgres.settings
+package com.personio.reminders.infra.postgres.reminders
 
 import com.personio.reminders.domain.reminders.Reminder
 import com.personio.reminders.domain.reminders.RemindersRepository
 import com.personio.reminders.helpers.MotherObject
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.util.*
 
@@ -38,6 +37,7 @@ interface RemindersRepositoryContractTest {
         val existingReminders = repo.findAll(employeeId)
 
         assertEquals(1, existingReminders.size)
+        assertTrue(existingReminders.contains(reminder))
     }
 
     @Test

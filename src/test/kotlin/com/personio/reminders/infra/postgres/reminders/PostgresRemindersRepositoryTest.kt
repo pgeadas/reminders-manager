@@ -1,6 +1,5 @@
-package com.personio.reminders.infra.postgres.settings
+package com.personio.reminders.infra.postgres.reminders
 
-import com.personio.reminders.domain.occurrences.Occurrence
 import com.personio.reminders.domain.reminders.Reminder
 import com.personio.reminders.domain.reminders.RemindersRepository
 import com.personio.reminders.infra.postgres.PostgresRemindersRepository
@@ -48,14 +47,7 @@ internal class PostgresRemindersRepositoryTest : RemindersRepositoryContractTest
         )
     }
 
-    private fun insertOccurrences(existingOccurrences: Collection<Occurrence>) {
-        database.provisionTable(
-            tableName = OCCURRENCES.name,
-            rows = existingOccurrences.map { it.toDatabaseRow() }
-        )
-    }
-
-    private fun Reminder.toDatabaseRow() = mapOf<String, Any?>(
+    private fun Reminder.toDatabaseRow() = mapOf(
         REMINDERS.ID.name to this.id,
         REMINDERS.EMPLOYEE_ID.name to this.employeeId,
         REMINDERS.TEXT.name to this.text,
@@ -63,12 +55,5 @@ internal class PostgresRemindersRepositoryTest : RemindersRepositoryContractTest
         REMINDERS.IS_RECURRING.name to this.isRecurring,
         REMINDERS.RECURRENCE_INTERVAL.name to this.recurringInterval,
         REMINDERS.RECURRENCE_FREQUENCY.name to this.recurringFrequency
-    )
-
-    private fun Occurrence.toDatabaseRow() = mapOf<String, Any?>(
-        OCCURRENCES.ID.name to this.id,
-        OCCURRENCES.REMINDER_ID.name to this.reminder.id,
-        OCCURRENCES.TIMESTAMP.name to this.date,
-        OCCURRENCES.IS_ACKNOWLEDGED.name to this.isAcknowledged
     )
 }

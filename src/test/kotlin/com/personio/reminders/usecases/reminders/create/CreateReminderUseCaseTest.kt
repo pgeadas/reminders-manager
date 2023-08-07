@@ -3,7 +3,7 @@ package com.personio.reminders.usecases.reminders.create
 import com.personio.reminders.domain.reminders.Reminder
 import com.personio.reminders.helpers.MotherObject
 import com.personio.reminders.infra.postgres.occurrences.InMemoryOccurrencesRepository
-import com.personio.reminders.infra.postgres.settings.InMemoryRemindersRepository
+import com.personio.reminders.infra.postgres.reminders.InMemoryRemindersRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import java.time.Instant

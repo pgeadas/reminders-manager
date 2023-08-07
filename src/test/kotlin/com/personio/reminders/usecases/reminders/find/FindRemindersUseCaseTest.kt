@@ -1,7 +1,7 @@
 package com.personio.reminders.usecases.reminders.find
 
 import com.personio.reminders.helpers.MotherObject
-import com.personio.reminders.infra.postgres.settings.InMemoryRemindersRepository
+import com.personio.reminders.infra.postgres.reminders.InMemoryRemindersRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test

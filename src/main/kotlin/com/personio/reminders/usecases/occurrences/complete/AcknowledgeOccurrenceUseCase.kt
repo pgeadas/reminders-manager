@@ -19,9 +19,9 @@ class AcknowledgeOccurrenceUseCase(
     /**
      * This method is invoked by the controller and is responsible for the use case implementation.
      */
-    fun acknowledge(id: UUID): AcknowledgeUseCaseResult {
-        val occurrence = occurrencesRepository.findBy(id) ?: return AcknowledgeUseCaseResult.NotFound()
+    fun acknowledge(id: UUID): AcknowledgeOccurrenceUseCaseResult {
+        val occurrence = occurrencesRepository.findBy(id) ?: return AcknowledgeOccurrenceUseCaseResult.NotFound()
         occurrencesRepository.acknowledge(occurrence)
-        return AcknowledgeUseCaseResult.Success
+        return AcknowledgeOccurrenceUseCaseResult.Success
     }
 }

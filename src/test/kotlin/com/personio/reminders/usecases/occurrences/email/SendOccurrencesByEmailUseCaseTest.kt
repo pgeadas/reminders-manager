@@ -94,7 +94,8 @@ class SendOccurrencesByEmailUseCaseTest {
         subject.sendReminders()
 
         verify(mailer, times(1)).send(any())
-        verifyNoMoreInteractions(mailer) /*this verify allowed me to find the bug. It is also very important to check
+        verifyNoMoreInteractions(mailer)
+        /*this verify allowed me to find the bug. It is also very important to check
         for unwanted interactions, not only for wanted ones*/
     }
 

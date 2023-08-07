@@ -59,7 +59,7 @@ internal class PostgresOccurrencesRepositoryTest : OccurrencesRepositoryContract
         )
     }
 
-    private fun Reminder.toDatabaseRow() = mapOf<String, Any?>(
+    private fun Reminder.toDatabaseRow() = mapOf(
         REMINDERS.ID.name to this.id,
         REMINDERS.EMPLOYEE_ID.name to this.employeeId,
         REMINDERS.TEXT.name to this.text,

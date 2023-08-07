@@ -41,17 +41,13 @@ class InMemoryOccurrencesRepository(
         !it.isAcknowledged && it.date.isBefore(instant)
 
     override fun findAt(instant: Instant, employeeId: UUID): Collection<Occurrence> {
-        val reminderIds = reminders.filter {
-            it.employeeId == employeeId
-        }.map {
-            it.id
-        }
+        val reminderIds = reminders
+            .filter { it.employeeId == employeeId }
+            .map { it.id }
 
-        return occurrences.filter {
-            !it.isAcknowledged &&
-                it.date.isBefore(instant) &&
-                reminderIds.contains(it.reminder.id)
-        }
+        return occurrences
+            .filter { reminderIds.contains(it.reminder.id) }
+            .filter { isNotAcknowledgedNorExpired(it, instant) }
     }
 
     override fun findBy(id: UUID): Occurrence? {
@@ -59,26 +55,28 @@ class InMemoryOccurrencesRepository(
     }
 
     override fun getInstantForNextReminderOccurrences(): Map<UUID, Instant> {
-        val recurringReminders = reminders.filter {
-            it.isRecurring &&
-                it.recurringFrequency != null &&
-                it.recurringInterval != null
-        }
-
+        val recurringReminders = reminders.filter { isRecurringAndHasValidFrequencyAndInterval(it) }
         // fixed shadowing
-        return recurringReminders.associate { reminder ->
-            val lastOccurrence = occurrences.maxByOrNull { it.date }
-            val nextOccurrenceInstant = if (lastOccurrence == null) {
-                reminder.date
-            } else {
-                val unit = convertFrequencyToChronoUnit(reminder.recurringFrequency?.value!!)
-                val lastOccurrenceTimestamp = lastOccurrence.date
-                unit.addToInstant(lastOccurrenceTimestamp, reminder.recurringInterval?.value!!.toLong(), clock)
-            }
-
-            reminder.id to nextOccurrenceInstant
-        }
+        return recurringReminders.associate { reminder -> toPairOfReminderIdAndNextOccurrenceInstant(reminder) }
     }
+
+    private fun toPairOfReminderIdAndNextOccurrenceInstant(reminder: Reminder): Pair<UUID, Instant> {
+        val lastOccurrence = lastOccurrenceOrNull()
+        val nextOccurrenceInstant = if (lastOccurrence == null) {
+            reminder.date
+        } else {
+            val unit = convertFrequencyToChronoUnit(reminder.recurringFrequency?.value!!)
+            val lastOccurrenceTimestamp = lastOccurrence.date
+            unit.addToInstant(lastOccurrenceTimestamp, reminder.recurringInterval?.value!!.toLong(), clock)
+        }
+
+        return reminder.id to nextOccurrenceInstant
+    }
+
+    private fun lastOccurrenceOrNull() = occurrences.maxByOrNull { it.date }
+
+    private fun isRecurringAndHasValidFrequencyAndInterval(it: Reminder) =
+        it.isRecurring && it.recurringFrequency != null && it.recurringInterval != null
 
     override fun markAsNotified(occurrence: Occurrence) {
         val occurrenceExists = occurrences.any { it.id == occurrence.id }
@@ -110,7 +108,7 @@ class InMemoryOccurrencesRepository(
         occurrences.add(updatedOccurrence)
     }
 
-    // Note: Intentionally leaving duplicated code
+    // Note: Intentionally leaving duplicated code ? Why?
     private fun convertFrequencyToChronoUnit(frequency: Int): ChronoUnit {
         return when (frequency) {
             1 -> ChronoUnit.DAYS
