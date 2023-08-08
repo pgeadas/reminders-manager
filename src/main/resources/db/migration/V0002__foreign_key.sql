@@ -1,4 +1,6 @@
 alter table if exists occurrences
-    add constraint fk_reminders foreign key (reminder_id) references reminders (id);
+    add constraint fk_reminders
+        foreign key (reminder_id) references reminders (id)
+            on delete cascade;
 
 
