@@ -6,6 +6,7 @@ import com.personio.reminders.domain.reminders.Reminder
 import com.personio.reminders.helpers.MotherObject
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.time.Clock
 import java.time.Instant
 import java.time.temporal.ChronoUnit
@@ -67,6 +68,7 @@ interface OccurrencesRepositoryContractTest {
     }
 
     // this test can only exist if we do not have the fk_key enforcing in the Sql schema
+    // So we fixed it by enforcing the same constraints when populating the InMemoryRepo
     @Test
     fun `find at should return only occurrences that have a reminder`() {
         val reminderForEmployee1 = MotherObject.reminders().new()
@@ -75,6 +77,7 @@ interface OccurrencesRepositoryContractTest {
         val occurrenceForEmployee2 = MotherObject.occurrences().newFrom(reminderForEmployee2)
         val repo = subjectWithData(
             listOf(
+                reminderForEmployee1,
                 reminderForEmployee2
             ),
             listOf(
@@ -88,8 +91,33 @@ interface OccurrencesRepositoryContractTest {
             Instant.now(MotherObject.clock).plusSeconds(1)
         )
 
-        assertEquals(1, foundOccurrences.size)
+        assertEquals(2, foundOccurrences.size)
+        assertTrue(foundOccurrences.contains(occurrenceForEmployee1))
         assertTrue(foundOccurrences.contains(occurrenceForEmployee2))
+    }
+
+    // and added a new test
+    @Test
+    fun `should not be possible to insert occurrences without a reminder`() {
+        val reminderForEmployee1 = MotherObject.reminders().new()
+        val reminderForEmployee2 = MotherObject.reminders().new()
+        val occurrenceForEmployee1 = MotherObject.occurrences().newFrom(reminderForEmployee1)
+        val occurrenceForEmployee2 = MotherObject.occurrences().newFrom(reminderForEmployee2)
+
+        val exception = assertThrows<Exception> {
+            subjectWithData(
+                listOf(
+                    reminderForEmployee2
+                ),
+                listOf(
+                    occurrenceForEmployee1,
+                    occurrenceForEmployee2
+                ),
+                MotherObject.clock
+            )
+        }
+
+        assertNotNull(exception)
     }
 
 
