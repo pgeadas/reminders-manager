@@ -20,6 +20,7 @@ internal class InMemoryOccurrencesRepositoryTest : OccurrencesRepositoryContract
         val remindersIds: Set<UUID> = existingReminders.map { it.id }.toSet()
         val occurrencesIds: Set<UUID> = existingOccurrences.map { it.reminder.id }.toSet()
 
+        // Do not allow adding occurrences without a reminder
         val difference = Sets.difference(occurrencesIds, remindersIds)
         if (!difference.isEmpty()) {
             throw RuntimeException("Cant add an Occurrence without a Reminder")

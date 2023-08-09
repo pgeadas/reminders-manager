@@ -29,7 +29,6 @@ class SendOccurrencesByEmailUseCase(
      */
     @Scheduled(cron = "0 */5 * * * *")
     fun sendReminders() = occurrences.findAt(Instant.now(clock))
-        .filter { !it.isNotificationSent }
         .forEach { occurrence -> sendMessageAndMarkAsNotified(occurrence) }
 
     private fun sendMessageAndMarkAsNotified(occurrence: Occurrence) {
@@ -42,3 +41,4 @@ class SendOccurrencesByEmailUseCase(
 // How does this ensure that we only send a single email, if we scale the app horizontally?
 // Database race condition possible in such scenario which will lead to multiple emails being sent
 // -> distributed lock, partitioning
+// -> QUEUE: split the mail service from here (SRP) and communicate via events (event driven approach)

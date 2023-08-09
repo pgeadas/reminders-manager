@@ -55,4 +55,6 @@ class RemindersEndpoint(
             is FindRemindersUseCaseResult.NotFound -> Response(Collections.emptyList())
         }
     }
+
+
 }

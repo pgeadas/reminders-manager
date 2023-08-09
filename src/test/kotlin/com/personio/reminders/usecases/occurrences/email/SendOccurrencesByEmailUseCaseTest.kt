@@ -95,8 +95,6 @@ class SendOccurrencesByEmailUseCaseTest {
 
         verify(mailer, times(1)).send(any())
         verifyNoMoreInteractions(mailer)
-        /*this verify allowed me to find the bug. It is also very important to check
-        for unwanted interactions, not only for wanted ones*/
     }
 
     @Test
@@ -118,5 +116,26 @@ class SendOccurrencesByEmailUseCaseTest {
         subject.sendReminders()
 
         assertTrue(occurrences.findBy(occurrenceOne.id)!!.isNotificationSent)
+    }
+
+    @Test
+    fun `should not send email notifications for already acknowledged reminders`() {
+        val reminderOne = MotherObject.reminders().new()
+        val occurrenceOne = MotherObject.occurrences().newFrom(reminderOne, isAcknowledged = true)
+
+        val occurrences = InMemoryOccurrencesRepository(
+            mutableListOf(reminderOne),
+            mutableListOf(occurrenceOne),
+            MotherObject.clock
+        )
+        val mailer: MailerService = mock()
+        val subject = SendOccurrencesByEmailUseCase(
+            occurrences,
+            Clock.offset(MotherObject.clock, Duration.ofSeconds(1L)),
+            mailer
+        )
+
+        subject.sendReminders()
+        verify(mailer, times(0)).send(any())
     }
 }
