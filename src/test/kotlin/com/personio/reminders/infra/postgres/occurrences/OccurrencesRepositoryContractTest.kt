@@ -67,8 +67,6 @@ interface OccurrencesRepositoryContractTest {
         assertEquals(reminderForEmployee1.id, foundOccurrences.single().reminder.id)
     }
 
-    // this test can only exist if we do not have the fk_key enforcing in the Sql schema
-    // So we fixed it by enforcing the same constraints when populating the InMemoryRepo
     @Test
     fun `find at should return only occurrences that have a reminder`() {
         val reminderForEmployee1 = MotherObject.reminders().new()
@@ -96,7 +94,6 @@ interface OccurrencesRepositoryContractTest {
         assertTrue(foundOccurrences.contains(occurrenceForEmployee2))
     }
 
-    // and added a new test
     @Test
     fun `should not be possible to insert occurrences without a reminder`() {
         val reminderForEmployee1 = MotherObject.reminders().new()
@@ -120,9 +117,8 @@ interface OccurrencesRepositoryContractTest {
         assertNotNull(exception)
     }
 
-
     @Test
-    fun `find at should return occurrences all occurrences unacknowledged before given instant`() {
+    fun `find at should return all unacknowledged occurrences before given instant`() {
         val reminderForEmployee1 = MotherObject.reminders().new()
         val reminderForEmployee2 = MotherObject.reminders().new()
         val occurrenceForEmployee1 = MotherObject.occurrences().newFrom(reminderForEmployee1)

@@ -68,7 +68,7 @@ class RemindersEndpointTest {
             .andExpect(MockMvcResultMatchers.jsonPath("$").doesNotExist())
     }
 
-    // Cant really tests the correct behaviour of the invalid date this way
+    // Cant really tests the correct behaviour of the invalid date this way...
     @Test
     fun `create should return 400 status when date is invalid`() {
         val jsonPayload =

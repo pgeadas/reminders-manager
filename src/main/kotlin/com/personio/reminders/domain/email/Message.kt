@@ -10,5 +10,3 @@ data class Message(
     val text: String,
     val employeeId: UUID
 )
-
-// This looks like a Domain Object to me, if we want all messaging services to use the same format, for example
