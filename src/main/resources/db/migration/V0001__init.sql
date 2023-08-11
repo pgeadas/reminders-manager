@@ -17,6 +17,3 @@ create table occurrences
     is_acknowledged boolean not null,
     notification_sent bool default false
 );
-
-
-
